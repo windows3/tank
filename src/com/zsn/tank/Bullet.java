@@ -23,6 +23,7 @@ public class Bullet {
         Color c =g.getColor();
         g.setColor(Color.RED);
         g.fillRect(x, y, WIDTH, HEIGHT);
+        g.setColor(c);
         move();
 
     }
