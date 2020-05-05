@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
  */
 public class TankFrame extends Frame {
     Tank myTank = new Tank(200, 200, Dir.DOWN);
+    Bullet bullet=new Bullet(300,300,Dir.DOWN);
 
     public TankFrame() throws HeadlessException {
         setSize(800, 600);//大小
@@ -31,6 +32,7 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
 //        System.out.println("paint");
         myTank.paint(g);
+        bullet.paint(g);
 
 //        x += 50;
 //        y += 50;
