@@ -14,6 +14,9 @@ public class TankFrame extends Frame {
     int x = 200;
     int y = 200;
 
+    Dir dir = Dir.DOWN;
+    private static final int SPEED = 10;
+
     public TankFrame() throws HeadlessException {
         setSize(800, 600);//大小
         setResizable(false);//不让改大小
@@ -32,6 +35,20 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
 //        System.out.println("paint");
         g.fillRect(x, y, 50, 50);
+        switch(dir) {
+            case LEFT:
+                x-=SPEED;
+                break;
+            case UP:
+                y-=SPEED;
+                break;
+            case RIGHT:
+                x+=SPEED;
+                break;
+            case DOWN:
+                y+=SPEED;
+                break;
+        }
 //        x += 50;
 //        y += 50;
     }
@@ -44,44 +61,60 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            int keyCode = e.getKeyCode();
-            switch (keyCode) {
+            int key = e.getKeyCode();
+            switch (key) {
                 case KeyEvent.VK_LEFT:
-                    bL =true;
+                    bL = true;
                     break;
                 case KeyEvent.VK_UP:
-                    bU =true;
+                    bU = true;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    bR=true;
+                    bR = true;
                     break;
                 case KeyEvent.VK_DOWN:
-                    bD=true;
+                    bD = true;
+                    break;
+
+                default:
                     break;
             }
 //            x+=50;
 //            y+=50;
 //            repaint();//默认调用paint
+            setMainTankDir();
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            int keyCode = e.getKeyCode();
-            switch (keyCode) {
+            int key = e.getKeyCode();
+            switch (key) {
                 case KeyEvent.VK_LEFT:
-                    bL =false;
+                    bL = false;
                     break;
                 case KeyEvent.VK_UP:
-                    bU =false;
+                    bU = false;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    bR=false;
+                    bR = false;
                     break;
                 case KeyEvent.VK_DOWN:
-                    bD=false;
+                    bD = false;
+                    break;
+
+                default:
                     break;
             }
+            setMainTankDir();
         }
+
+        private void setMainTankDir() {
+            if(bL) dir = Dir.LEFT;
+            if(bU) dir = Dir.UP;
+            if(bR) dir = Dir.RIGHT;
+            if(bD) dir = Dir.DOWN;
+        }
+
     }
 
 }
