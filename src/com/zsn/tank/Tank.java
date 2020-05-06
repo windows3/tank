@@ -17,6 +17,7 @@ public class Tank {
     private static final int SPEED = 10;
 
     public Tank(int x, int y, Dir dir,TankFrame tankFrame) {
+        super();
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -83,6 +84,6 @@ public class Tank {
     }
 
     public void fire() {
-     tankFrame.bullet=   new Bullet(this.x, this.y, this.dir);
+        tankFrame.bullets.add(new Bullet(this.x, this.y, this.dir,this.tankFrame));
     }
 }
