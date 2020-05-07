@@ -13,7 +13,7 @@ import java.util.List;
  * @Date: 2020/5/5 19:59
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200, 400, Dir.DOWN, this);
+    Tank myTank = new Tank(200, 400, Dir.DOWN,Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>(); //不清的话 就会内存泄漏
     List<Tank> tanks = new ArrayList<>();
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;

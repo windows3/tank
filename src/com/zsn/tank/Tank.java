@@ -1,6 +1,7 @@
 package com.zsn.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @Author: zsn
@@ -10,19 +11,22 @@ public class Tank {
 
     private int x;
     private int y;
-    private boolean moving = false;
+    private boolean moving = true;
     private TankFrame tf;
     public static final int WIDTH = ResourceMgr.tankD.getWidth();
     public static final int HEIGHT = ResourceMgr.tankD.getHeight();
     private Dir dir = Dir.DOWN;
-    private static final int SPEED = 10;
+    private static final int SPEED = 5;
     private boolean living =true;
+    private Random random =new Random();
+    private Group group =Group.BAD;
 
-    public Tank(int x, int y, Dir dir, TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir, Group group,TankFrame tankFrame) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group=group;
         this.tf = tankFrame;
     }
 
@@ -65,6 +69,7 @@ public class Tank {
                 y += SPEED;
                 break;
         }
+        if(random.nextInt(10)>8) this.fire();
     }
 
     public int getX() {
@@ -99,10 +104,18 @@ public class Tank {
         this.moving = moving;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
+        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group,this.tf));
     }
 
     public void die() {
