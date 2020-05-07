@@ -19,6 +19,7 @@ public class Explode {
     public Explode(int x, int y, TankFrame tf) {
         this.x = x;
         this.y = y;
+        new Thread(()->new Audio("audio/explode.wav").play()).start();
 
     }
 
