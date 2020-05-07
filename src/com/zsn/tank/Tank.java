@@ -12,32 +12,33 @@ public class Tank {
     private int y;
     private boolean moving = false;
     private TankFrame tankFrame;
-
+    public static final int WIDTH = ResourceMgr.tankD.getWidth();
+    public static final int HEIGHT = ResourceMgr.tankD.getHeight();
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 10;
 
-    public Tank(int x, int y, Dir dir,TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir, TankFrame tankFrame) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tankFrame=tankFrame;
+        this.tankFrame = tankFrame;
     }
 
     public void paint(Graphics g) {
         //加载图片
-        switch (dir){
+        switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.tankL,x,y,null);
+                g.drawImage(ResourceMgr.tankL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR,x,y,null);
+                g.drawImage(ResourceMgr.tankR, x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU,x,y,null);
+                g.drawImage(ResourceMgr.tankU, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD,x,y,null);
+                g.drawImage(ResourceMgr.tankD, x, y, null);
                 break;
         }
 
@@ -97,6 +98,8 @@ public class Tank {
     }
 
     public void fire() {
-        tankFrame.bullets.add(new Bullet(this.x, this.y, this.dir,this.tankFrame));
+        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
+        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+        tankFrame.bullets.add(new Bullet(bX, bY, this.dir, this.tankFrame));
     }
 }

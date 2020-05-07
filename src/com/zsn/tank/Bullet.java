@@ -9,8 +9,9 @@ import java.awt.*;
 public class Bullet {
     private static final int SPEED = 10;
     private int x, y;
-    private static final int WIDTH = 30, HEIGHT = 30;
-    private TankFrame tf =null;
+    public static final int WIDTH = ResourceMgr.bulletD.getWidth();
+    public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
+    private TankFrame tf = null;
 
     private Dir dir;
 
@@ -28,18 +29,18 @@ public class Bullet {
         if (!live) {
             tf.bullets.remove(this);
         }
-        switch (dir){
+        switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.bulletL,x,y,null);
+                g.drawImage(ResourceMgr.bulletL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR,x,y,null);
+                g.drawImage(ResourceMgr.bulletR, x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletU,x,y,null);
+                g.drawImage(ResourceMgr.bulletU, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD,x,y,null);
+                g.drawImage(ResourceMgr.bulletD, x, y, null);
                 break;
         }
 

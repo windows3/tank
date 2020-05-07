@@ -13,9 +13,10 @@ import java.util.List;
  * @Date: 2020/5/5 19:59
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200, 200, Dir.DOWN,this);
-    List<Bullet> bullets =new ArrayList<>(); //不清的话 就会内存泄漏
-    static final  int GAME_WIDTH =800,GAME_HEIGHT=600;
+    Tank myTank = new Tank(200, 400, Dir.DOWN, this);
+    List<Bullet> bullets = new ArrayList<>(); //不清的话 就会内存泄漏
+    List<Tank> tanks = new ArrayList<>();
+    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);//大小
@@ -30,11 +31,13 @@ public class TankFrame extends Frame {
             }
         });
     }
-//    去闪烁
+
+    //    去闪烁
     Image offScreenImage = null;
+
     @Override
     public void update(Graphics g) {
-        if(offScreenImage == null) {
+        if (offScreenImage == null) {
             offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
@@ -49,13 +52,17 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
 
-        Color c =g.getColor();
+        Color c = g.getColor();
         g.setColor(Color.white);
-        g.drawString("子弹的数量:"+bullets.size(),10,60);
+        g.drawString("子弹的数量:" + bullets.size(), 10, 60);
         g.setColor(c);
         myTank.paint(g);
-        for (int i =0;i<bullets.size();i++){
+        for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
+        }
+
+        for (int i = 0; i < tanks.size(); i++) {
+            tanks.get(i).paint(g);
         }
 
 
