@@ -11,21 +11,23 @@ public class Tank {
     private int x;
     private int y;
     private boolean moving = false;
-    private TankFrame tankFrame;
+    private TankFrame tf;
     public static final int WIDTH = ResourceMgr.tankD.getWidth();
     public static final int HEIGHT = ResourceMgr.tankD.getHeight();
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 10;
+    private boolean living =true;
 
     public Tank(int x, int y, Dir dir, TankFrame tankFrame) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tankFrame = tankFrame;
+        this.tf = tankFrame;
     }
 
     public void paint(Graphics g) {
+        if(!living) tf.tanks.remove(this);
         //加载图片
         switch (dir) {
             case LEFT:
@@ -100,6 +102,10 @@ public class Tank {
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tankFrame.bullets.add(new Bullet(bX, bY, this.dir, this.tankFrame));
+        tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
+    }
+
+    public void die() {
+        this.living =false;
     }
 }
