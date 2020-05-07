@@ -17,6 +17,7 @@ public class TankFrame extends Frame {
     List<Bullet> bullets = new ArrayList<>(); //不清的话 就会内存泄漏
     List<Tank> tanks = new ArrayList<>();
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    Explode e =new Explode(100,100,this);
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);//大小
@@ -72,6 +73,7 @@ public class TankFrame extends Frame {
                 bullets.get(i).collideWith(tanks.get(j));
             }
         }
+        e.paint(g);
 
 //        x += 50;
 //        y += 50;
