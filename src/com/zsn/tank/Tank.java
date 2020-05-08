@@ -20,6 +20,7 @@ public class Tank {
     private boolean living = true;
     private Random random = new Random();
     private Group group = Group.BAD;
+    Rectangle rect = new Rectangle();
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         super();
@@ -28,6 +29,11 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tankFrame;
+
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
     public void paint(Graphics g) {
@@ -71,13 +77,20 @@ public class Tank {
                 break;
         }
 
-        if (this.group == Group.BAD && random.nextInt(100) > 95) this.fire();
-        if (this.group == Group.BAD && random.nextInt(100) > 95) {
+
+
+        if (this.group == Group.BAD && random.nextInt(100) > 95)
+            this.fire();
+
+        if (this.group == Group.BAD && random.nextInt(100) > 95)
             randomDir();
 
 //            边界检测
-            boundsCheck();
-        }
+        boundsCheck();
+//        update rect
+        rect.x = this.x;
+        rect.y = this.y;
+
     }
 
     private void boundsCheck() {

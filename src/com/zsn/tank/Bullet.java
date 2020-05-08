@@ -13,6 +13,7 @@ public class Bullet {
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
     private TankFrame tf = null;
     private Dir dir;
+    Rectangle rect =new Rectangle();
 
     public boolean living = true;
 
@@ -25,6 +26,11 @@ public class Bullet {
         this.dir = dir;
         this.group=group;
         this.tf = tf;
+
+        rect.x =this.x;
+        rect.y =this.y;
+        rect.width =WIDTH;
+        rect.height =HEIGHT;
     }
 
     public Group getGroup() {
@@ -75,7 +81,8 @@ public class Bullet {
         }
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) living = false;
 
-
+        rect.x=this.x;
+        rect.y=this.y;
     }
 
     /**
@@ -86,10 +93,8 @@ public class Bullet {
     public void collideWith(Tank tank) {
         if(this.group==tank.getGroup()) return;
 
-//        TODO 用一个rect来记录子弹的位置 ，让GC太忙了
-        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), tank.WIDTH, tank.HEIGHT);
-        if (rect1.intersects(rect2)) {//是否相交
+
+        if (rect.intersects(tank.rect)) {//是否相交
             tank.die();
             this.die();
             int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
