@@ -16,7 +16,7 @@ public class TankFrame extends Frame {
     Tank myTank = new Tank(200, 400, Dir.DOWN,Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>(); //不清的话 就会内存泄漏
     List<Tank> tanks = new ArrayList<>();
-    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    static final int GAME_WIDTH = 1080, GAME_HEIGHT = 600;
     Explode e =new Explode(100,100,this);
 
     public TankFrame() throws HeadlessException {
