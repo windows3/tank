@@ -17,21 +17,21 @@ public class Tank {
     public static final int HEIGHT = ResourceMgr.tankD.getHeight();
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
-    private boolean living =true;
-    private Random random =new Random();
-    private Group group =Group.BAD;
+    private boolean living = true;
+    private Random random = new Random();
+    private Group group = Group.BAD;
 
-    public Tank(int x, int y, Dir dir, Group group,TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.group=group;
+        this.group = group;
         this.tf = tankFrame;
     }
 
     public void paint(Graphics g) {
-        if(!living) tf.tanks.remove(this);
+        if (!living) tf.tanks.remove(this);
         //加载图片
         switch (dir) {
             case LEFT:
@@ -69,8 +69,17 @@ public class Tank {
                 y += SPEED;
                 break;
         }
-        if (this.group==Group.GOOD) return;
-        if(random.nextInt(10)>8) this.fire();
+
+        if (this.group == Group.BAD && random.nextInt(100) > 95) this.fire();
+        if (this.group == Group.BAD && random.nextInt(100) > 95) {
+            randomDir();
+        }
+    }
+
+    private void randomDir() {
+
+
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     public int getX() {
@@ -116,10 +125,10 @@ public class Tank {
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group,this.tf));
+        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
     }
 
     public void die() {
-        this.living =false;
+        this.living = false;
     }
 }
