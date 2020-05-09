@@ -91,8 +91,8 @@ public class Audio {
 
 	public static void main(String[] args) {
 		// Audio a = new Audio("audio/explode.wav");
-		Audio a = new Audio("audio/war1.wav");
-		a.loop();
+//		Audio a = new Audio("audio/war1.wav");
+//		a.loop();
 
 	}
 
