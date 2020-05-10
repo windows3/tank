@@ -31,6 +31,8 @@ public class Bullet {
         rect.y =this.y;
         rect.width =WIDTH;
         rect.height =HEIGHT;
+
+        tf.bullets.add(this);
     }
 
     public Group getGroup() {
@@ -97,8 +99,8 @@ public class Bullet {
         if (rect.intersects(tank.rect)) {//是否相交
             tank.die();
             this.die();
-            int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
-            int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+            int eX = tank.x + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+            int eY = tank.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
             tf.explodes.add(new Explode(eX,eY,tf));
         }
     }

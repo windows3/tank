@@ -1,5 +1,9 @@
 package com.zsn.tank;
 
+import com.zsn.design.DefaultFireStrategy;
+import com.zsn.design.FireStrategy;
+import com.zsn.design.FourDirFireStrategy;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -9,18 +13,19 @@ import java.util.Random;
  */
 public class Tank {
 
-    private int x;
-    private int y;
+    public int x, y;
     private boolean moving = true;
-    private TankFrame tf;
+    public TankFrame tf;
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
-    private Dir dir = Dir.DOWN;
+    public Dir dir = Dir.DOWN;
     private static final int SPEED = 6;
     private boolean living = true;
     private Random random = new Random();
-    private Group group = Group.BAD;
+    public Group group = Group.BAD;
     Rectangle rect = new Rectangle();
+
+    private FireStrategy DF;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         super();
@@ -34,6 +39,16 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+        if (this.group == Group.GOOD) {
+            String goodFSName = (String) PropertyMgr.get("goodFs");
+            try {
+                DF = (FireStrategy)Class.forName(goodFSName).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (this.group == Group.BAD) {
+            DF =new  DefaultFireStrategy();
+        }
     }
 
     public void paint(Graphics g) {
@@ -105,21 +120,6 @@ public class Tank {
         this.dir = Dir.values()[random.nextInt(4)];
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
 
     public Dir getDir() {
         return dir;
@@ -146,9 +146,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+        DF.fire(this);
     }
 
     public void die() {
