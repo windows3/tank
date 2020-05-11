@@ -1,8 +1,6 @@
-package com.zsn.tank;
+package com.zsn.abstracfactory;
 
-import com.zsn.abstracfactory.BaseBullet;
-import com.zsn.abstracfactory.BaseExplode;
-import com.zsn.abstracfactory.BaseTank;
+import com.zsn.tank.*;
 
 import java.awt.*;
 
@@ -10,21 +8,22 @@ import java.awt.*;
  * @Author: zsn
  * @Date: 2020/5/6 0:46
  */
-public class Bullet  extends BaseBullet {
-    private static final int SPEED = 6;
+public class RectBullet extends BaseBullet {
+    private static final int SPEED = 10;
     private int x, y;
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
     private TankFrame tf = null;
     private Dir dir;
-    Rectangle rect =new Rectangle();
+    Rectangle rect = new Rectangle();
 
     public boolean living = true;
 
-    private Group group=Group.BAD;
+    private Group group = Group.BAD;
 
 
-    public Bullet(int x, int y, Dir dir,Group group, TankFrame tf) {
+    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -52,21 +51,25 @@ public class Bullet  extends BaseBullet {
         if (!living) {
             tf.bullets.remove(this);
         }
-        switch (dir) {
-            case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x, y, null);
-                break;
-            case UP:
-                g.drawImage(ResourceMgr.bulletU, x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x, y, null);
-                break;
-        }
+//        switch (dir) {
+//            case LEFT:
+//                g.drawImage(ResourceMgr.bulletL, x, y, null);
+//                break;
+//            case RIGHT:
+//                g.drawImage(ResourceMgr.bulletR, x, y, null);
+//                break;
+//            case UP:
+//                g.drawImage(ResourceMgr.bulletU, x, y, null);
+//                break;
+//            case DOWN:
+//                g.drawImage(ResourceMgr.bulletD, x, y, null);
+//                break;
+//        }
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
 
+        g.fillRect(x, y, 20, 20);
+        g.setColor(c);
         move();
 
     }
@@ -88,8 +91,8 @@ public class Bullet  extends BaseBullet {
         }
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) living = false;
 
-        rect.x=this.x;
-        rect.y=this.y;
+        rect.x = this.x;
+        rect.y = this.y;
     }
 
     /**
@@ -99,19 +102,19 @@ public class Bullet  extends BaseBullet {
      */
     @Override
     public void collideWith(BaseTank tank) {
-        if(this.group==tank.getGroup()) return;
+        if (this.group == tank.getGroup()) return;
 
 
         if (rect.intersects(tank.rect)) {//是否相交
             tank.die();
             this.die();
             int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
-            int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            tf.explodes.add( tf.gf.createExplode(eX,eY,tf));
+            int eY = tank.getY()+ Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+            tf.explodes.add(tf.gf.createExplode(eX, eY, tf));
         }
     }
 
     private void die() {
-        this.living =false;
+        this.living = false;
     }
 }

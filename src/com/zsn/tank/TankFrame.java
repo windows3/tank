@@ -1,7 +1,6 @@
 package com.zsn.tank;
 
-import com.zsn.design.DefaultFireStrategy;
-import com.zsn.design.FourDirFireStrategy;
+import com.zsn.abstracfactory.*;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -16,11 +15,14 @@ import java.util.List;
  * @Date: 2020/5/5 19:59
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, this);
-    List<Bullet> bullets = new ArrayList<>(); //不清的话 就会内存泄漏
-    List<Tank> tanks = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
-    static final int GAME_WIDTH = 1080, GAME_HEIGHT = 600;
+    public Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, this);
+    public List<BaseBullet> bullets = new ArrayList<>(); //不清的话 就会内存泄漏
+    public List<BaseTank> tanks = new ArrayList<>();
+    public List<BaseExplode> explodes = new ArrayList<>();
+    public GameFactory gf = new DefaultFactory();
+//    public GameFactory gf = new RectFactory();
+
+    public static final int GAME_WIDTH = 1080, GAME_HEIGHT = 600;
 //    Explode e = new Explode(100, 100, this);
 
     public TankFrame() throws HeadlessException {

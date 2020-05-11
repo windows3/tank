@@ -1,9 +1,8 @@
-package com.zsn.tank;
+package com.zsn.abstracfactory;
 
-import com.zsn.abstracfactory.BaseTank;
 import com.zsn.design.DefaultFireStrategy;
 import com.zsn.design.FireStrategy;
-import com.zsn.design.FourDirFireStrategy;
+import com.zsn.tank.*;
 
 import java.awt.*;
 import java.util.Random;
@@ -12,7 +11,7 @@ import java.util.Random;
  * @Author: zsn
  * @Date: 2020/5/6 0:06
  */
-public class Tank extends BaseTank {
+public class RectTank extends BaseTank {
 
     public int x, y;
     private boolean moving = true;
@@ -23,12 +22,12 @@ public class Tank extends BaseTank {
     private static final int SPEED = 6;
     private boolean living = true;
     private Random random = new Random();
-
-
+//    public Group group = Group.BAD;
+//    public Rectangle rect = new Rectangle();
 
     private FireStrategy DF;
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+    public RectTank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         super();
         this.x = x;
         this.y = y;
@@ -56,23 +55,26 @@ public class Tank extends BaseTank {
     public void paint(Graphics g) {
         if (!living) tf.tanks.remove(this);
 
-        //加载图片
-        switch (dir) {
-            case LEFT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
-                break;
-            case UP:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
-                break;
-        }
+//        //加载图片
+//        switch (dir) {
+//            case LEFT:
+//                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
+//                break;
+//            case RIGHT:
+//                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
+//                break;
+//            case UP:
+//                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
+//                break;
+//            case DOWN:
+//                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
+//                break;
+//        }
 
-
+        Color c = g.getColor();
+        g.setColor(group == Group.GOOD ? Color.RED : Color.BLUE);
+        g.fillRect(x, y, 50, 50);
+        g.setColor(c);
         move();
 
     }
@@ -112,8 +114,8 @@ public class Tank extends BaseTank {
     private void boundsCheck() {
         if (this.x < 2) x = 2;
         if (this.y < 28) y = 28;
-        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
-        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2;
+        if (this.x > TankFrame.GAME_WIDTH - RectTank.WIDTH - 2) x = TankFrame.GAME_WIDTH - RectTank.WIDTH - 2;
+        if (this.y > TankFrame.GAME_HEIGHT - RectTank.HEIGHT - 2) y = TankFrame.GAME_HEIGHT - RectTank.HEIGHT - 2;
     }
 
     private void randomDir() {
@@ -152,27 +154,19 @@ public class Tank extends BaseTank {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     @Override
     public int getY() {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public void fire() {
 //        DF.fire(this);
 
-        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+        int bX = this.x + RectTank.WIDTH / 2 - Bullet.WIDTH / 2;
+        int bY = this.y + RectTank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 
         Dir[] dirs = Dir.values();
-        for (Dir dir:dirs){
+        for (Dir dir : dirs) {
             tf.gf.createBullet(bX, bY, dir, group, tf);
         }
         if (group == Group.GOOD) new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
