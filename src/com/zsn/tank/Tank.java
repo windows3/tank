@@ -1,8 +1,7 @@
 package com.zsn.tank;
 
-import com.zsn.design.DefaultFireStrategy;
-import com.zsn.design.FireStrategy;
-import com.zsn.design.FourDirFireStrategy;
+import com.zsn.strategy.DefaultFireStrategy;
+import com.zsn.strategy.FireStrategy;
 
 import java.awt.*;
 import java.util.Random;
@@ -11,19 +10,20 @@ import java.util.Random;
  * @Author: zsn
  * @Date: 2020/5/6 0:06
  */
-public class Tank {
+public class Tank extends GameObject {
 
     public int x, y;
+    public int oldX, oldY;
     private boolean moving = true;
 
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
     public Dir dir = Dir.DOWN;
-    private static final int SPEED = 6;
+    private static final int SPEED = 5;
     private boolean living = true;
     private Random random = new Random();
     public Group group = Group.BAD;
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
 
     private FireStrategy DF;
     public GameModel gm;
@@ -52,8 +52,9 @@ public class Tank {
         }
     }
 
+    @Override
     public void paint(Graphics g) {
-        if (!living) gm.tanks.remove(this);
+        if (!living) gm.remove(this);
 
         //加载图片
         switch (dir) {
@@ -76,7 +77,7 @@ public class Tank {
 
     }
 
-    private void move() {
+    public void move() {
         if (!moving) return;
         switch (dir) {
             case LEFT:
@@ -152,5 +153,34 @@ public class Tank {
 
     public void die() {
         this.living = false;
+    }
+
+
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public void stop() {
+        this.moving = false;
+        this.oldX = x;
+        this.oldY = y;
+
+//        if (!moving) {
+//            if (this.group == Group.BAD) {
+//                if (random.nextInt(100) > 95) {
+//
+//                    this.x = oldX - 1;
+//                    this.y = oldY + 1;
+//                } else {
+//                    this.x = oldX;
+//                    this.y = oldY;
+//                }
+//                this.moving = true;
+//                move();
+//            } else {
+//                return;
+//            }
+//
+//        }
     }
 }

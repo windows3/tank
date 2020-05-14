@@ -1,4 +1,4 @@
-package com.zsn.design;
+package com.zsn.strategy;
 
 /**
  * @Author: zsn

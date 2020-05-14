@@ -5,5 +5,7 @@ bulletSpeed=10
 gameWidth=1080
 gameHeight=720
 #firStrategy
-goodFs =com.zsn.design.FourDirFireStrategy
-badFs =com.zsn.design.DefaultFireStrategy
+goodFs =com.zsn.strategy.FourDirFireStrategy
+badFs =com.zsn.strategy.DefaultFireStrategy
+#colliders
+colliders=com.zsn.cor.BulletTankCollider,com.zsn.cor.TankTankCollider
