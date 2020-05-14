@@ -15,7 +15,7 @@ public class Tank {
 
     public int x, y;
     private boolean moving = true;
-    public TankFrame tf;
+
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
     public Dir dir = Dir.DOWN;
@@ -26,14 +26,15 @@ public class Tank {
     Rectangle rect = new Rectangle();
 
     private FireStrategy DF;
+    public GameModel gm;
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tankFrame;
+        this.gm = gm;
 
         rect.x = this.x;
         rect.y = this.y;
@@ -42,17 +43,17 @@ public class Tank {
         if (this.group == Group.GOOD) {
             String goodFSName = (String) PropertyMgr.get("goodFs");
             try {
-                DF = (FireStrategy)Class.forName(goodFSName).getDeclaredConstructor().newInstance();
+                DF = (FireStrategy) Class.forName(goodFSName).getDeclaredConstructor().newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (this.group == Group.BAD) {
-            DF =new  DefaultFireStrategy();
+            DF = new DefaultFireStrategy();
         }
     }
 
     public void paint(Graphics g) {
-        if (!living) tf.tanks.remove(this);
+        if (!living) gm.tanks.remove(this);
 
         //加载图片
         switch (dir) {
