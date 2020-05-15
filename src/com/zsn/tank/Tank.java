@@ -76,8 +76,14 @@ public class Tank extends GameObject {
         move();
 
     }
+public void back(){
+        x=oldX;
+        y=oldY;
+}
 
     public void move() {
+        oldX=x;
+        oldY=y;
         if (!moving) return;
         switch (dir) {
             case LEFT:
