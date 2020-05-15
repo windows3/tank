@@ -8,4 +8,4 @@ gameHeight=720
 goodFs =com.zsn.strategy.FourDirFireStrategy
 badFs =com.zsn.strategy.DefaultFireStrategy
 #colliders
-colliders=com.zsn.cor.BulletTankCollider,com.zsn.cor.TankTankCollider
+colliders=com.zsn.cor.BulletTankCollider,com.zsn.cor.TankTankCollider,com.zsn.cor.BulletWallCollider,com.zsn.cor.TankWallCollider

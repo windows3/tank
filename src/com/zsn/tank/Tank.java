@@ -26,15 +26,15 @@ public class Tank extends GameObject {
     public Rectangle rect = new Rectangle();
 
     private FireStrategy DF;
-    public GameModel gm;
 
-    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
+
+    public Tank(int x, int y, Dir dir, Group group) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
+
 
         rect.x = this.x;
         rect.y = this.y;
@@ -50,11 +50,13 @@ public class Tank extends GameObject {
         } else if (this.group == Group.BAD) {
             DF = new DefaultFireStrategy();
         }
+        GameModel.getInstance().add(this);
     }
 
     @Override
     public void paint(Graphics g) {
-        if (!living) gm.remove(this);
+        if (!living)
+            GameModel.getInstance().remove(this);
 
         //加载图片
         switch (dir) {
@@ -76,14 +78,15 @@ public class Tank extends GameObject {
         move();
 
     }
-public void back(){
-        x=oldX;
-        y=oldY;
-}
+
+    public void back() {
+        x = oldX;
+        y = oldY;
+    }
 
     public void move() {
-        oldX=x;
-        oldY=y;
+        oldX = x;
+        oldY = y;
         if (!moving) return;
         switch (dir) {
             case LEFT:

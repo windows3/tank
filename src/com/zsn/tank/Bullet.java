@@ -11,42 +11,39 @@ public class Bullet extends GameObject {
     private int x, y;
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
-    private GameModel gm = null;
+
     private Dir dir;
     public Rectangle rect = new Rectangle();
 
     public boolean living = true;
 
-    private Group group = Group.BAD;
+    public Group group = Group.BAD;
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Bullet(int x, int y, Dir dir, Group group) {
 
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
+
 
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
 
-        gm.add(this);
+        GameModel.getInstance().add(this);
     }
 
     public Group getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
 
     @Override
     public void paint(Graphics g) {
         if (!living) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir) {
             case LEFT:

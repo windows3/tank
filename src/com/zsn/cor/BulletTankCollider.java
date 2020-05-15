@@ -1,9 +1,6 @@
 package com.zsn.cor;
 
-import com.zsn.tank.Bullet;
-import com.zsn.tank.Explode;
-import com.zsn.tank.GameObject;
-import com.zsn.tank.Tank;
+import com.zsn.tank.*;
 
 /**
  * @Author: zsn
@@ -33,18 +30,18 @@ public class BulletTankCollider implements Collider {
      * @param t
      */
     public boolean collideWith(Bullet b, Tank t) {
-        if (b.getGroup() == t.getGroup()) return false;
+        if (b.getGroup() == t.getGroup()) return true;
 
 
-        if (b.rect.intersects(t.rect)) {//是否相交
+        if (t.group == Group.BAD && b.rect.intersects(t.rect)) {//是否相交
             t.die();
             b.die();
             int eX = t.x + Tank.WIDTH / 2 - Explode.WIDTH / 2;
             int eY = t.y + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            t.gm.add(new Explode(eX, eY, t.gm));
-            return true;
+            new Explode(eX, eY);
+            return false;
         }
-        return false;
+        return true;
     }
 
 }

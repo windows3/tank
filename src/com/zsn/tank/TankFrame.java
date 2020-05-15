@@ -11,7 +11,8 @@ import java.awt.event.WindowEvent;
  * @Date: 2020/5/5 19:59
  */
 public class TankFrame extends Frame {
-    GameModel gm= new GameModel();
+
+    GameModel gm = GameModel.getInstance();
 
     static final int GAME_WIDTH = 1080, GAME_HEIGHT = 600;
 //    Explode e = new Explode(100, 100, this);
