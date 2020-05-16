@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class Tank extends GameObject {
 
-    public int x, y;
+
     public int oldX, oldY;
     private boolean moving = true;
 
@@ -174,22 +174,15 @@ public class Tank extends GameObject {
         this.oldX = x;
         this.oldY = y;
 
-//        if (!moving) {
-//            if (this.group == Group.BAD) {
-//                if (random.nextInt(100) > 95) {
-//
-//                    this.x = oldX - 1;
-//                    this.y = oldY + 1;
-//                } else {
-//                    this.x = oldX;
-//                    this.y = oldY;
-//                }
-//                this.moving = true;
-//                move();
-//            } else {
-//                return;
-//            }
-//
-//        }
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 }
