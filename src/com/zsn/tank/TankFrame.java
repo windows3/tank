@@ -1,10 +1,13 @@
 package com.zsn.tank;
 
+import com.zsn.observer.Observer;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 /**
  * @Author: zsn
@@ -78,6 +81,10 @@ public class TankFrame extends Frame {
                     break;
                 case KeyEvent.VK_CONTROL:
                     gm.getMainTank().fire();
+//                    List<Observer>  observerList= gm.observers;
+//                    for (Observer o: observerList) {
+//                        o.actionOnFire(gm.event);
+//                    }
                 default:
                     break;
             }

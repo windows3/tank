@@ -4,6 +4,9 @@ import com.zsn.cor.BulletTankCollider;
 import com.zsn.cor.Collider;
 import com.zsn.cor.ColliderChain;
 import com.zsn.cor.TankTankCollider;
+import com.zsn.observer.GOEvent;
+import com.zsn.observer.GOObserver;
+import com.zsn.observer.Observer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,7 +26,11 @@ public class GameModel {
         INSTANCE.init();
     }
 
-    Tank myTank ;
+ public    List<Observer> observers =new ArrayList<>();
+
+    GOEvent event;
+
+    Tank myTank;
 //    java.util.List<Bullet> bullets = new ArrayList<>(); //不清的话 就会内存泄漏
 //    java.util.List<Tank> tanks = new ArrayList<>();
 //    List<Explode> explodes = new ArrayList<>();
@@ -40,11 +47,12 @@ public class GameModel {
     public static GameModel getInstance() {
         return INSTANCE;
     }
+
     private GameModel() {
 
     }
 
-    private void init(){
+    private void init() {
         myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD);
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
 //        初始化敌方坦克
@@ -56,6 +64,9 @@ public class GameModel {
         add(new Wall(550, 150, 200, 50));
         add(new Wall(300, 300, 50, 200));
         add(new Wall(550, 300, 50, 200));
+        event = new GOEvent(myTank);
+
+        observers.add(new GOObserver(event.getSource()));
     }
 
     public void add(GameObject go) {
@@ -108,4 +119,6 @@ public class GameModel {
     public Tank getMainTank() {
         return myTank;
     }
+
+
 }
